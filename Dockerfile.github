@@ -9,7 +9,16 @@ RUN apt-get update && apt-get install -y curl jq && \
     rm -rf /var/lib/apt/lists/*
 
 # Install kubectl from Docker Hub.
-COPY --from=lachlanevenson/k8s-kubectl:v1.10.3 /usr/local/bin/kubectl /usr/local/bin/kubectl
+COPY --from=lachlanevenson/k8s-kubectl:latest /usr/local/bin/kubectl /usr/local/bin/kubectl
+
+# Install Azure CLI
+RUN apt-get update
+RUN apt-get install -y libssl-dev libffi-dev
+RUN apt-get install -y python-dev
+RUN apt-get install apt-transport-https lsb-release software-properties-common -y
+
+RUN apt-get update && \
+    apt-get -y install azure-cli
 
 COPY github-actions-runner/entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
