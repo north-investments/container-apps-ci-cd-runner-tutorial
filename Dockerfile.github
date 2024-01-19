@@ -11,10 +11,6 @@ RUN apt-get update && apt-get install -y curl jq && \
 # Install kubectl from Docker Hub.
 COPY --from=lachlanevenson/k8s-kubectl:v1.10.3 /usr/local/bin/kubectl /usr/local/bin/kubectl
 
-RUN mkdir -p $HOME/.kube && \
-    sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config && \
-    sudo chown $(id -u):$(id -g) $HOME/.kube/config
-
 COPY github-actions-runner/entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
 
