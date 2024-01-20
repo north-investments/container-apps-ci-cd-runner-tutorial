@@ -9,7 +9,9 @@ RUN apt-get update && apt-get install -y curl jq && \
     rm -rf /var/lib/apt/lists/*
 
 # Install kubectl from Docker Hub.
-COPY --from=lachlanevenson/k8s-kubectl:latest /usr/local/bin/kubectl /usr/local/bin/kubectl
+RUN curl -LO https://dl.k8s.io/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+RUN chmod +x ./kubectl
+RUN mv ./kubectl /usr/local/bin
 
 # Install Azure CLI
 RUN apt-get update
