@@ -14,7 +14,7 @@ ENV DOCKER_VERSION 25.0.3
 ENV DOCKER_API_VERSION 1.44
 RUN curl -fsSL "https://download.docker.com/linux/static/${DOCKER_CHANNEL}/x86_64/docker-${DOCKER_VERSION}.tgz" && \
     tar -xzC /usr/local/bin --strip=1 docker/docker && \
-    mv /tmp/docker /usr/local/bin/docker
+    mv /tmp/docker/docker /usr/local/bin
 
 # Install kubectl from Docker Hub.
 RUN curl -LO https://dl.k8s.io/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
