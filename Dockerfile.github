@@ -12,8 +12,8 @@ RUN apt-get update && apt-get install -y curl jq && \
 ENV DOCKER_CHANNEL stable
 ENV DOCKER_VERSION 25.0.3
 ENV DOCKER_API_VERSION 1.44
-RUN curl -fsSL "https://download.docker.com/linux/static/${DOCKER_CHANNEL}/x86_64/docker-${DOCKER_VERSION}.tgz" && \
-    tar -xzC /usr/local/bin --strip=1 docker/docker && \
+RUN wget -P /tmp/ https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}.tgz && \
+    tar -xvf /tmp/docker-${DOCKER_VERSION}.tgz --directory /tmp/ && \
     mv /tmp/docker/docker /usr/local/bin
 
 # Install kubectl from Docker Hub.
