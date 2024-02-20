@@ -8,14 +8,6 @@ RUN apt-get update && apt-get install -y curl jq && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install docker client    
-ENV DOCKER_CHANNEL stable
-ENV DOCKER_VERSION 25.0.3
-ENV DOCKER_API_VERSION 1.44
-RUN wget -P /tmp/ https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}.tgz && \
-    tar -xvf /tmp/docker-${DOCKER_VERSION}.tgz --directory /tmp/ && \
-    mv /tmp/docker/docker /usr/local/bin
-
 # Install kubectl from Docker Hub.
 RUN curl -LO https://dl.k8s.io/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 RUN chmod +x ./kubectl
