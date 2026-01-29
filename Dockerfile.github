@@ -1,10 +1,10 @@
-FROM ghcr.io/actions/actions-runner:2.304.0
+FROM ghcr.io/actions/actions-runner:2.330.0
 # for latest release, see https://github.com/actions/runner/releases
 
 USER root
 
-# Install curl and jq
-RUN apt-get update && apt-get install -y curl jq && \
+# Install curl, jq, and git
+RUN apt-get update && apt-get install -y curl jq git && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
