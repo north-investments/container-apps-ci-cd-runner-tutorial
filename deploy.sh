@@ -1,13 +1,14 @@
+ACR=solidstate
 JOB=gh-actions-org-runner
-IMG=github-actions-runner:v4.0
+IMG=github-actions-runner:v4.5
 ENV=gh-actions-runner-env
 SUBNET_ID=/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.Network/virtualNetworks/{vnet-name}/subnets/{snet-name}
 
-docker build \
+docker build --no-cache \
   -t $ACR.azurecr.io/$IMG \
   -f Dockerfile.github \
   --platform linux/amd64 \
-  https://github.com/Azure-Samples/container-apps-ci-cd-runner-tutorial.git
+  .
 
 docker push $ACR.azurecr.io/$IMG
 

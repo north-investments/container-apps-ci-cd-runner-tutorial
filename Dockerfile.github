@@ -3,7 +3,7 @@ FROM ghcr.io/actions/actions-runner:2.330.0
 
 USER root
 
-# Install curl, jq, and git
+# Install curl and jq
 RUN apt-get update && apt-get install -y curl jq git && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -14,13 +14,16 @@ RUN chmod +x ./kubectl
 RUN mv ./kubectl /usr/local/bin
 
 # Install Azure CLI
-RUN apt-get update
-RUN apt-get install -y libssl-dev libffi-dev
-RUN apt-get install -y python-dev
-RUN apt-get install apt-transport-https lsb-release software-properties-common -y
-
 RUN apt-get update && \
-    apt-get -y install azure-cli
+    apt-get install -y ca-certificates curl apt-transport-https lsb-release gnupg && \
+    mkdir -p /etc/apt/keyrings && \
+    curl -sLS https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/apt/keyrings/microsoft.gpg && \
+    chmod go+r /etc/apt/keyrings/microsoft.gpg && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" > /etc/apt/sources.list.d/azure-cli.list && \
+    apt-get update && \
+    apt-get install -y azure-cli && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY github-actions-runner/entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
