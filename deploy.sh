@@ -1,10 +1,10 @@
 ACR=solidstate
 JOB=gh-actions-org-runner
-IMG=github-actions-runner:v4.5
+IMG=github-actions-runner:v4.6
 ENV=gh-actions-runner-env
 SUBNET_ID=/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.Network/virtualNetworks/{vnet-name}/subnets/{snet-name}
 
-docker build --no-cache \
+docker build \
   -t $ACR.azurecr.io/$IMG \
   -f Dockerfile.github \
   --platform linux/amd64 \

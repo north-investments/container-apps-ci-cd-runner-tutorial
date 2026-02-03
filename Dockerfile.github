@@ -25,6 +25,11 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Install kubelogin
+RUN az aks install-cli
+ENV PATH="$PATH:$HOME/.azure-kubelogin"
+RUN kubelogin --version
+
 COPY github-actions-runner/entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
 
